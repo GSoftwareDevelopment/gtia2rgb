@@ -20,6 +20,8 @@ var
 
 begin
   poke(559,0);
+
+  // prepare display list
   adr:=DLIST_ADR; _scr:=SCR_ADR; _atr:=ATR_ADR;
   dlb($70); dlb($70);
   for i:=0 to 23 do
@@ -29,10 +31,16 @@ begin
     dlb(0); dlb(0); dlb(0); dlb(0);
   end;
   dlb($41); dlw(DLIST_ADR);
+
+  // clear screen & set attributes
   fillchar(pointer(SCR_ADR),80*24,$00);
   fillchar(pointer(ATR_ADR),80*24,$1f);
   poke(559,34);
+
+  // set display list
   dpoke(560,DLIST_ADR);
+
+  // enable 80cols CGA mode
   poke($d01d,$60);
 end;
 
